@@ -55,4 +55,29 @@ describe('testing music routes', () => {
 
         expect(res.body).toEqual({...singleSong, id: expect.any(String)})
     })
+
+    it('should edit an existing song', async () => {
+        const newSong = await Music.insert({
+            song_title: 'digital kids',
+            artist: 'taiwo',
+            album: 'unknown',
+            genre: 'rnb',
+        });
+        const res = await request(app).patch(`/api/v1/music/${newSong.id}`).send({
+            song_title: 'digital kids',
+            artist: 'viktor taiwo and solomon',
+            album: 'unknown',
+            genre: 'rnb',
+        })
+
+        const updatedSong = {
+            id: expect.any(String),
+            song_title: 'digital kids',
+            artist: 'viktor taiwo and solomon',
+            album: 'unknown',
+            genre: 'rnb',
+        };
+        expect(res.body).toEqual(updatedSong)
+        expect(await Music.songById(newSong.id)).toEqual(updatedSong)
+    })
 })
