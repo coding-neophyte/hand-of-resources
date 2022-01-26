@@ -42,4 +42,17 @@ describe('testing team routes', () => {
     expect(res.body).toEqual([newTeam]);
   });
 
+  it('should return a single team', async () => {
+    const newTeam = await Team.insert({
+      team_name: 'Nets',
+      city: 'Brooklyn',
+      conference: 'eastern conference',
+      championships: 1,
+    });
+    const res = await request(app).get(`/api/v1/teams/${newTeam.id}`);
+
+    expect(res.body).toEqual({ ...newTeam, id: expect.any(String) });
+
+  });
+
 });
