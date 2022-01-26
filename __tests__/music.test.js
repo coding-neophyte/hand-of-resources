@@ -80,4 +80,18 @@ describe('testing music routes', () => {
         expect(res.body).toEqual(updatedSong)
         expect(await Music.songById(newSong.id)).toEqual(updatedSong)
     })
+
+    it('should delete a song', async () => {
+        const newSong = await Music.insert({
+            song_title: 'digital kids',
+            artist: 'viktor taiwo and solomon',
+            album: 'unknown',
+            genre: 'rnb',
+        })
+        const res = await request(app).delete(`/api/v1/music/${newSong.id}`);
+
+        expect(res.body).toEqual(newSong);
+        expect(await Music.songById(newSong.id)).toBeNull();
+    })
+
 })
