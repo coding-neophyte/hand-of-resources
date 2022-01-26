@@ -9,3 +9,13 @@ CREATE TABLE music (
     album TEXT NOT NULL,
     genre TEXT NOT NULL
 );
+
+DROP TABLE IF EXISTS favorite_teams;
+
+CREATE TABLE favorite_teams(
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    team_name TEXT NOT NULL,
+    city TEXT NOT NULL,
+    conference TEXT NOT NULL,
+    championships INT NOT NULL
+);
