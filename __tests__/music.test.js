@@ -31,4 +31,16 @@ describe('testing music routes', () => {
             genre: 'pop',
         })
     })
+
+    it('should get list of songs', async () => {
+        const newSong = await Music.insert({
+            song_title: 'warm',
+            artist: 'sg lewis',
+            album: 'chemicals',
+            genre: 'pop',
+        });
+        const res = await request(app).get('/api/v1/music')
+
+        expect(res.body).toEqual([newSong]);
+    })
 })
