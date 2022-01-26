@@ -13,7 +13,7 @@ describe('testing team routes', () => {
     pool.end();
   });
 
-  it.only('should add new team', async () => {
+  it('should add new team', async () => {
     const res = await request(app).post('/api/v1/teams').send({
       team_name: 'Knicks',
       city: 'New York',
@@ -28,6 +28,18 @@ describe('testing team routes', () => {
       conference: 'eastern conference',
       championships: 2,
     });
+  });
+
+  it('should return list of teams', async () => {
+    const newTeam = await Team.insert({
+      team_name: 'Knicks',
+      city: 'New York',
+      conference: 'eastern conference',
+      championships: 2,
+    });
+    const res = await request(app).get('/api/v1/teams');
+
+    expect(res.body).toEqual([newTeam]);
   });
 
 });
