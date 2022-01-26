@@ -43,4 +43,16 @@ describe('testing music routes', () => {
 
         expect(res.body).toEqual([newSong]);
     })
+
+    it('should retrieve single song', async () => {
+        const singleSong = await Music.insert({
+            song_title: 'two ways',
+            artist: 'trey songz',
+            album: 'back home',
+            genre: 'rnb',
+        })
+        const res = await request(app).get(`/api/v1/music/${singleSong.id}`)
+
+        expect(res.body).toEqual({...singleSong, id: expect.any(String)})
+    })
 })
