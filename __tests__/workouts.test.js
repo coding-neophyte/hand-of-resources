@@ -51,4 +51,25 @@ describe('testing workout routes', () => {
     });
   });
 
+  it('should update existing workout', async () => {
+    const newWorkout = await Workout.insert({
+      workout_name: 'bench press',
+      muscles_worked: 'chest',
+    });
+
+    const res = await request(app).patch(`/api/v1/workouts/${newWorkout.id}`).send({
+      workout_name: 'bench press',
+      muscles_worked: 'chest/shoulders',
+    });
+
+    const editedWorkout = {
+      id: expect.any(String),
+      workout_name: 'bench press',
+      muscles_worked: 'chest/shoulders',
+    };
+
+    expect(res.body).toEqual(editedWorkout);
+    expect(await Workout.getWorkoutByid(newWorkout.id)).toEqual(editedWorkout);
+  });
+
 });
