@@ -35,4 +35,19 @@ describe('testing expense routes', () => {
       savings: 1000.00,
     });
   });
+
+  it('should return a list of expenses', async () => {
+    const newExpense = await Expense.insert({
+      rent: 2000.00,
+      phone: 120.00,
+      transportation: 100.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    });
+    const res = await request(app).get('/api/v1/expenses');
+
+    expect(res.body).toEqual([newExpense]);
+  });
 });
