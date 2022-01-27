@@ -30,3 +30,16 @@ CREATE TABLE favorite_fighters (
     losses INT NOT NULL,
     hometown TEXT NOT NULL
 );
+
+DROP TABLE IF EXISTS monthly_expenses;
+
+CREATE TABLE monthly_expenses (
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    rent INT NOT NULL,
+    phone INT NOT NULL,
+    transportation INT NOT NULL,
+    food INT NOT NULL,
+    utilities INT NOT NULL,
+    entertainment INT NOT NULL,
+    savings INT NOT NULL
+);
