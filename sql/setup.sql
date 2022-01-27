@@ -43,3 +43,11 @@ CREATE TABLE monthly_expenses (
     entertainment INT NOT NULL,
     savings INT NOT NULL
 );
+
+DROP TABLE IF EXISTS workouts;
+
+CREATE TABLE workouts (
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    workout_name TEXT NOT NULL,
+    muscles_worked TEXT NOT NULL
+);
