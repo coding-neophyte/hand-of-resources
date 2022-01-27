@@ -66,4 +66,38 @@ describe('testing expense routes', () => {
 
     expect(res.body).toEqual(expense);
   });
+
+  it('should update an existing expense', async () => {
+    const expense = await Expense.insert({
+      rent: 2000.00,
+      phone: 120.00,
+      transportation: 100.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    });
+    const res = await request(app).patch(`/api/v1/expenses/${expense.id}`).send({
+      rent: 1000.00,
+      phone: 100.00,
+      transportation: 120.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    });
+
+    const updatedExpense = {
+      id: expect.any(String),
+      rent: 1000.00,
+      phone: 100.00,
+      transportation: 120.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    };
+    expect(res.body).toEqual(updatedExpense);
+    expect(await Expense.getExpenseById(expense.id)).toEqual(updatedExpense);
+  });
 });
