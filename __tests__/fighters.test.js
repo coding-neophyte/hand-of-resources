@@ -58,4 +58,33 @@ describe('testing fighter routes', () => {
 
     expect(res.body).toEqual(newFighter);
   });
+
+  it('should edit existing fighter', async () => {
+    const newFighter = await Fighter.insert({
+      name: 'conor mcgregor',
+      style: 'mma',
+      wins: 22,
+      losses: 6,
+      hometown: 'ireland'
+    });
+    const res = await request(app).patch(`/api/v1/fighters/${newFighter.id}`).send({
+      name: 'conor mcgregor',
+      style: 'mma',
+      wins: 23,
+      losses: 5,
+      hometown: 'ireland'
+    });
+
+    const updatedFighter = {
+      id: expect.any(String),
+      name: 'conor mcgregor',
+      style: 'mma',
+      wins: 23,
+      losses: 5,
+      hometown: 'ireland'
+    };
+
+    expect(res.body).toEqual(updatedFighter);
+    expect(await Fighter.getFighterById(newFighter.id)).toEqual(updatedFighter);
+  });
 });
