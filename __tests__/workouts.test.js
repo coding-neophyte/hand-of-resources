@@ -72,4 +72,15 @@ describe('testing workout routes', () => {
     expect(await Workout.getWorkoutByid(newWorkout.id)).toEqual(editedWorkout);
   });
 
+  it('should delete workout', async () => {
+    const newWorkout = await Workout.insert({
+      workout_name: 'squats',
+      muscles_worked: 'legs',
+    });
+    const res = await request(app).delete(`/api/v1/workouts/${newWorkout.id}`);
+
+    expect(res.body).toEqual(newWorkout);
+    expect(await Workout.getWorkoutByid(newWorkout.id)).toBeNull();
+  });
+
 });
