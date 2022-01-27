@@ -100,4 +100,21 @@ describe('testing expense routes', () => {
     expect(res.body).toEqual(updatedExpense);
     expect(await Expense.getExpenseById(expense.id)).toEqual(updatedExpense);
   });
+
+  it('should delete an expense', async () => {
+    const expenseToDelete = await Expense.insert({
+      rent: 1000.00,
+      phone: 100.00,
+      transportation: 120.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    });
+
+    const res = await request(app).delete(`/api/v1/expenses/${expenseToDelete.id}`);
+
+    expect(res.body).toEqual(expenseToDelete);
+    expect(await Expense.deleteExpense(expenseToDelete.id)).toBeNull();
+  });
 });
