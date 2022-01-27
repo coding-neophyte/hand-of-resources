@@ -25,4 +25,15 @@ describe('testing workout routes', () => {
     });
   });
 
+  it('should get workout list', async () => {
+    const workout = await Workout.insert({
+      workout_name: 'shoulder press',
+      muscles_worked: 'shoulders',
+    });
+
+    const res = await request(app).get('/api/v1/workouts');
+
+    expect(res.body).toEqual([workout]);
+  });
+
 });
