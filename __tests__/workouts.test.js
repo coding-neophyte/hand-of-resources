@@ -36,4 +36,19 @@ describe('testing workout routes', () => {
     expect(res.body).toEqual([workout]);
   });
 
+  it('should get workout by id ', async () => {
+    const newWorkout = await Workout.insert({
+      workout_name: 'leg press',
+      muscles_worked: 'legs',
+    });
+
+    const res = await request(app).get(`/api/v1/workouts/${newWorkout.id}`);
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      workout_name: 'leg press',
+      muscles_worked: 'legs',
+    });
+  });
+
 });
