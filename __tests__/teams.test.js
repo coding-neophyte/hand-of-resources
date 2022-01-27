@@ -55,4 +55,30 @@ describe('testing team routes', () => {
 
   });
 
+  it('should update existing team', async () => {
+    const newTeam = await Team.insert({
+      team_name: 'Celtics',
+      city: 'Boston',
+      conference: 'eastern conference',
+      championships: 17,
+    });
+    const res = await request(app).patch(`/api/v1/teams/${newTeam.id}`).send({
+      team_name: 'Celtics',
+      city: 'Boston',
+      conference: 'eastern',
+      championships: 16,
+    });
+
+    const updatedTeam = {
+      id: expect.any(String),
+      team_name: 'Celtics',
+      city: 'Boston',
+      conference: 'eastern',
+      championships: 16,
+    };
+
+    expect(res.body).toEqual(updatedTeam);
+    expect(await Team.getSingleTeam(newTeam.id)).toEqual(updatedTeam);
+  });
+
 });
