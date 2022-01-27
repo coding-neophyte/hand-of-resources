@@ -19,3 +19,14 @@ CREATE TABLE favorite_teams(
     conference TEXT NOT NULL,
     championships INT NOT NULL
 );
+
+DROP TABLE IF EXISTS favorite_fighters;
+
+CREATE TABLE favorite_fighters (
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    name TEXT NOT NULL,
+    style TEXT NOT NULL,
+    wins INT NOT NULL,
+    losses INT NOT NULL,
+    hometown TEXT NOT NULL
+);
