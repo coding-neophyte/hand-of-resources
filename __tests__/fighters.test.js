@@ -87,4 +87,19 @@ describe('testing fighter routes', () => {
     expect(res.body).toEqual(updatedFighter);
     expect(await Fighter.getFighterById(newFighter.id)).toEqual(updatedFighter);
   });
+
+  it('should delete a fighter', async () => {
+    const fighter = await Fighter.insert({
+      name: 'mike tyson',
+      style: 'boxing',
+      wins: 58,
+      losses: 6,
+      hometown: 'brooklyn'
+    });
+
+    const res = await request(app).delete(`/api/v1/fighters/${fighter.id}`);
+
+    expect(res.body).toEqual(fighter);
+    expect(await Fighter.getFighterById(fighter.id)).toBeNull();
+  });
 });
