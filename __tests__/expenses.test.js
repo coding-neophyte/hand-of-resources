@@ -50,4 +50,20 @@ describe('testing expense routes', () => {
 
     expect(res.body).toEqual([newExpense]);
   });
+
+  it('should return an expense by id', async () => {
+    const expense = await Expense.insert({
+      rent: 2000.00,
+      phone: 120.00,
+      transportation: 100.00,
+      food: 300.00,
+      utilities: 150.00,
+      entertainment: 300.00,
+      savings: 1000.00,
+    });
+
+    const res = await request(app).get(`/api/v1/expenses/${expense.id}`);
+
+    expect(res.body).toEqual(expense);
+  });
 });
