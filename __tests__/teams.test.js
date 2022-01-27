@@ -81,4 +81,17 @@ describe('testing team routes', () => {
     expect(await Team.getSingleTeam(newTeam.id)).toEqual(updatedTeam);
   });
 
+  it('should delete a team', async () => {
+    const team = await Team.insert({
+      team_name: 'Knicks',
+      city: 'New York',
+      conference: 'eastern',
+      championships: 2,
+    });
+    const res = await request(app).delete(`/api/v1/teams/${team.id}`);
+
+    expect(res.body).toEqual(team);
+    expect(await Team.getSingleTeam(team.id)).toBeNull();
+  });
+
 });
